@@ -16,6 +16,11 @@ interface WeatherInterface {
 }
 
 class Weather implements WeatherInterface {
+  public const WINTER = 'WINTER';
+  public const SPRING = 'SPRING';
+  public const SUMMER = 'SUMMER';
+  public const AUTUMN = 'AUTUMN';
+
   /**
   *	{@inheritDoc}
   */
@@ -30,13 +35,13 @@ class Weather implements WeatherInterface {
     }
 
     if (in_array($month, [12, 1, 2])) {
-      return "WINTER";
+      return self::WINTER;
     } else if (in_array($month, [2, 3, 4])) {
-      return "SPRING";
+      return self::SPRING;
     } else if (in_array($month, [5, 6, 7])) {
-      return "SUMMER";
+      return self::SUMMER;
     } else {
-      return "AUTUMN";
+      return self::AUTUMN;
     }
   }
 }
