@@ -8,11 +8,14 @@ class SeasonException extends \Exception {}
 
 interface WeatherInterface {
   /**
-  *	@param  int  $month  An integer in the range of 1, 2, ..., 11, 12
   *	@return  string  A string of "WINTER", "SPRING", "SUMMER", or "AUTUMN"
-  *	@throws  SeasonException
   */
-  public static function getSeason(int $month): string;
+  public function getSeason(): string;
+
+  /**
+  *	@return  bool  Whether the month is in winter.
+  */
+  public function isWinter(): bool;
 }
 
 class Weather implements WeatherInterface {
@@ -21,10 +24,13 @@ class Weather implements WeatherInterface {
   public const SUMMER = 'SUMMER';
   public const AUTUMN = 'AUTUMN';
 
+  protected int $month;
+  protected string $season;
+
   /**
-  *	{@inheritDoc}
+  * @throws  SeasonException
   */
-  public static function getSeason(int $month): string
+  public function __construct(int $month)
   {
     if ($month < 1) {
       throw new SeasonException("The given month must be greater than or equal to 1.");
@@ -34,14 +40,36 @@ class Weather implements WeatherInterface {
       throw new SeasonException("The given month must be less than or equal to 12.");
     }
 
-    if (in_array($month, [12, 1, 2])) {
+    $this->month = $month;
+    $this->season = $this->determineSeason();
+  }
+
+	protected function determineSeason(): string
+  {
+    if (in_array($this->month, [12, 1, 2])) {
       return self::WINTER;
-    } else if (in_array($month, [2, 3, 4])) {
+    } else if (in_array($this->month, [2, 3, 4])) {
       return self::SPRING;
-    } else if (in_array($month, [5, 6, 7])) {
+    } else if (in_array($this->month, [5, 6, 7])) {
       return self::SUMMER;
     } else {
       return self::AUTUMN;
     }
+  }
+
+  /**
+  *	{@inheritDoc}
+  */
+  public function getSeason(): string
+  {
+    return $this->season;
+  }
+
+  /**
+  *	{@inheritDoc}
+  */
+  public function isWinter(): bool
+  {
+    return $this->season === self::WINTER;
   }
 }
