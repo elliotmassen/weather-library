@@ -25,6 +25,10 @@ class Weather implements WeatherInterface {
       throw new SeasonException("The given month must be greater than or equal to 1.");
     }
 
+    if ($month > 12) {
+      throw new SeasonException("The given month must be less than or equal to 12.");
+    }
+
     if (in_array($month, [12, 1, 2])) {
       return "WINTER";
     } else if (in_array($month, [2, 3, 4])) {
