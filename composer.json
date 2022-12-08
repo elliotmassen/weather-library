@@ -1,0 +1,17 @@
+{
+    "name": "elliotmassen/weather-library",
+    "description": "An example library to demonstrate how to version an API.",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "ElliotMassen\\WeatherLibrary\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Elliot Massen",
+            "email": "contact@elliotmassen.com"
+        }
+    ],
+    "require": {}
+}
